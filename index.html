@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Field</title>
+
+    <style>
+
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        button {
+            margin: 20px
+        }
+
+        #field {
+            width: 420px;
+            height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .square {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+        }
+
+        .bgblack {
+            background-color: black;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <button id="generate">Generate</button>
+        <button id="random">Randomize!</button>
+    </div>
+
+    <div id="field"></div>
+
+
+    <script>
+  //Looks through my HTML document, and stores the HTML tag with id "field" in my variable.
+        let field = document.getElementById("field");
+
+        let standard = document.getElementById("generate");
+        standard.addEventListener("click", generateField);
+
+        let random = document.getElementById("random");
+        random.addEventListener("click", makeRandom)
+
+        function generateField() {
+            /*
+            Write your code here to generate a field as indicated in the image.
+            For now you don't need to write any CSS. Any necessary classes are already provided!
+            */
+
+    for(let i = 1; i<101;i++){
+    let square = document.createElement("div");
+    //de variabele square gaat ervoor zorgen dat (grijze dus niet de .square van css)square als div gecreëerd wordt
+    // square.className="cell";
+    square.setAttribute("class","square"); //grijze sq krijgt de klasse van .square (waardes styling)
+    square.setAttribute("id", "div" + i); //bovenop de class krijgt deze div een id en heet div+i (i = 1, 2, 3 ,...)
+    field.append(square); //voeg de gecreëerde div to aan field
+
+    let h5 = document.createElement("h5"); //heading grootte cijfers
+    h5.textContent = i; //tag h5 krijgt waarde van i
+    square.appendChild(h5); // child van iedere div
+
+
+}
+
+
+let elements = document.getElementsByClassName("square"); //alle elementen met class square worden hier aangehaald
+let black = true; //de square krijgt waarde zwart
+//nieuwe loop voor elements (van vorige loop) die div bepaald:
+for (let i=0; i< elements.length; i++) {
+
+if (black ===true) {
+elements[i].style.backgroundColor = "black";
+if ((i+1)%10!==0) {black = false}
+}
+else{
+  elements[i].classList.add("white")
+  if ((i+1)%10!==0) {black=true}
+
+
+
+}
+
+
+
+  }
+        }
+//eerst was de functie aangehaald en nu wordt deze gemaakt
+        function makeRandom() {
+        let elements = document.getElementsByClassName("white");
+        for (let index = 0; index < elements.length; index++) {
+        elements[index].style.backgroundColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+        }
+        }
+
+
+        function reset() {
+            field.innerHTML = "";
+        }
+
+    </script>
+
+</body>
+</html>
